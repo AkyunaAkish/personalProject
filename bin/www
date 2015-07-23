@@ -23,7 +23,12 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-var io = require('socket.io')(server)
+//var io = require('socket.io')(server)
+//io.on('connection', function(socket){
+//    socket.on('chat message', function(msg){
+//        io.emit('chat message', msg);
+//    });
+//});
 
 
 /**
@@ -35,11 +40,6 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 
-io.on('connection', function(socket){
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-    });
-});
 
 
 
