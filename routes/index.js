@@ -29,14 +29,14 @@ router.get('/', function(req, res, next) {
 })
 
 
-router.get('/login', function (req, res) {
-    if (req.session.id) {
-        res.redirect('index');
-
-    } else {
-        res.render('/');
-    }
-})
+//router.get('/login', function (req, res) {
+//    if (req.session.id) {
+//        res.redirect('index');
+//
+//    } else {
+//        res.render('/');
+//    }
+//})
 
 router.post('/login', function(req, res, next) {
     if (!req.body.email) {
