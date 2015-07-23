@@ -79,12 +79,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var port = process.env.PORT || 3000;
-
-
-http.listen(process.env.PORT || 3000, function(){
-    console.log('listening');
-});
+//var port = process.env.PORT || 3000;
+//
+//
+//http.listen(process.env.PORT || 3000, function(){
+//    console.log('listening');
+//});
 
 
 module.exports = app;
