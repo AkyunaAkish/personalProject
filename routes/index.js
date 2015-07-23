@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function (req, res) {
     if (req.session.id) {
-        res.render('index');
+        res.redirect('index');
 
     } else {
         res.render('/');
