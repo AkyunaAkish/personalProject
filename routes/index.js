@@ -21,7 +21,7 @@ var protectRoute = function (req, res, next) {
 router.get('/', function(req, res, next) {
   res.render('home', { title: 'Chat' });
 });
- router.get('/index', function(req,res){
+ router.get('/index',protectRoute, function(req,res){
      users.findOne({_id: req.session.id}, function (err, docs) {
          console.log(docs.username);
          res.render('index', { title: 'Chat', username: docs.username});
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function (req, res) {
     if (req.session.id) {
-        res.redirect('index');
+        res.render('index');
 
     } else {
         res.render('/');
