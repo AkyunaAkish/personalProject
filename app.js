@@ -12,8 +12,9 @@ var users = require('./routes/users');
 
 var app = express();
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+
+//var http = require('http').Server(app);
+//var io = require('socket.io')(http);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,11 +39,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-io.on('connection', function(socket){
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-    });
-});
+//io.on('connection', function(socket){
+//    socket.on('chat message', function(msg){
+//        io.emit('chat message', msg);
+//    });
+//});
 
 
 app.use('/', routes);
