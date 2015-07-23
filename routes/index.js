@@ -5,16 +5,16 @@ var db = require('monk')(process.env.MONGOLAB_URI);
 var users = db.get('users');
 var bcrypt = require('bcryptjs');
 
-
-var protectRoute = function (req, res, next) {
-  if (req.session.id) {
-    next();
-  }
-  else {
-
-    res.redirect('/');
-  }
-}
+//
+//var protectRoute = function (req, res, next) {
+//  if (req.session.id) {
+//    next();
+//  }
+//  else {
+//
+//    res.redirect('/');
+//  }
+//}
 
 
 /* GET home page. */
