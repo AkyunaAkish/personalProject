@@ -29,14 +29,14 @@ router.get('/', function(req, res, next) {
 })
 
 
-//router.get('/login', function (req, res) {
-//    if (req.session.id) {
-//        res.redirect('index');
-//
-//    } else {
-//        res.render('/');
-//    }
-//})
+router.get('/login', function (req, res) {
+    if (req.session.id) {
+        res.redirect('index');
+
+    } else {
+        res.render('/');
+    }
+})
 
 router.post('/login', function(req, res, next) {
     if (!req.body.email) {
@@ -49,7 +49,7 @@ router.post('/login', function(req, res, next) {
             if (docs && bcrypt.compareSync(req.body.password, docs.password)) {
                 req.session.id = docs._id;
                 console.log(req.session);
-                res.redirect('/');
+                res.redirect('index');
             }
 
             else {
