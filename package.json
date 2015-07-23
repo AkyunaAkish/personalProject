@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --harmony app.js",
-    "dev": "nodemon --harmony app.js"
+    "start": "node app.js"
+
   },
   "dependencies": {
     "bcryptjs": "^2.2.0",
