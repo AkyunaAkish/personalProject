@@ -94,8 +94,8 @@
         var $chat = $('#messages');
 
 
-        $messageForm.hide();
-        $users.hide();
+//        $messageForm.hide();
+//        $users.hide();
         $nickForm.submit(function (e) {
             e.preventDefault();
             socket.emit('new user', $nickBox.val(), function (data) {
