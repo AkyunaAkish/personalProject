@@ -55,33 +55,30 @@
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-    var socket = io();
-    $('.messageSubmitForm').submit(function () {
 
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-
-        return false;
-    });
-    socket.on('chat message', function (data) {
-        var nick = data.nick;
-        var ms = data.message;
-         $('#messages').append($('<li>').text(nick + ':' + ms));
-    });
-</script>
 <script>
     var $cont = $('.messageDiv');
     $cont[0].scrollTop = $cont[0].scrollHeight;
 
-    $('#m').keyup(function (e) {
-        if (e.keyCode == 13) {
-//            $cont.append('<p>' + $(this).val() + '</p>');
-            $cont[0].scrollTop = $cont[0].scrollHeight;
-//            $(this).val('');
-        }
-    })
-    //            .focus();
+//maybe messageArea on event?
+//    $('#m').keyup(function (e) {
+//        if (e.keyCode == 13) {
+//            $cont[0].scrollTop = $cont[0].scrollHeight;
+//        }
+//    })
+
+
+//    $('#message').input(function (e) {
+//        if (e.keyCode == 13) {
+//            $cont[0].scrollTop = $cont[0].scrollHeight;
+//        }
+//    })
+
+
+    $('.messageDiv').trigger(event, function() {
+        $cont[0].scrollTop = $cont[0].scrollHeight;
+    });
+
 </script>
 
 <script>
@@ -95,6 +92,7 @@
         var $messageForm = $('.messageSubmitForm');
         var $messageBox = $('#m');
         var $chat = $('#messages');
+
 
         $messageForm.hide();
         $users.hide();
@@ -120,11 +118,22 @@
             $users.html('<h2 class="userListHeader">People in the<br> Chatmosphere</h2>' + html);
             $messageForm.show();
             $users.show();
-            $nickForm.hide();
+//            $nickForm.hide();
 
 //            $('#nickWrap').hide();
         });
 
+$messageForm.submit(function(e){
+    e.preventDefault();
+    socket.emit('chat message',$('#m').val())
+    $('#m').val('');
+})
+
+        socket.on('chat message', function(data){
+            var nick = data.nick;
+            var ms = data.message;
+            $('#messages').append($('<li>').text(nick + ':' + ms));
+        })
 
     })
 </script>
