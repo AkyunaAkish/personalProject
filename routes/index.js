@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 
  router.get('/index', function(req,res){
      users.findOne({_id: req.session.id}, function (err, docs) {
-         console.log(docs.username);
+         //console.log(docs.username);
          res.render('index', { title: 'Chat', username: docs.username});
      })
 })
@@ -80,7 +80,7 @@ router.post('/register', function (req, res) {
             res.render('home', {successfulRegister: 'You have successfully registered, please log in to continue.'});
         }
         else {
-            res.render('home', {registerError: 'Email already exists in the database'})
+            res.render('home', {registerError: 'Username already exists in the database'})
         }
     })
 

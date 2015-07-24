@@ -1,6 +1,8 @@
 <link rel='stylesheet' href='/stylesheets/style.css'/>
+<div class="messageDiv">
+    <ul id="messages"></ul>
+</div>
 
-<ul id="messages"></ul>
 
 <form action="">
     <input id="m" autocomplete="off"/>
@@ -21,3 +23,17 @@
         $('#messages').append($('<li>').text(msg));
     });
 </script>
+<script>
+    var $cont = $('.messageDiv');
+    $cont[0].scrollTop = $cont[0].scrollHeight;
+
+    $('#m').keyup(function(e) {
+        if (e.keyCode == 13) {
+//            $cont.append('<p>' + $(this).val() + '</p>');
+            $cont[0].scrollTop = $cont[0].scrollHeight;
+//            $(this).val('');
+        }
+    })
+//            .focus();
+</script>
+
