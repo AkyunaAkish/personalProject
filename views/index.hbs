@@ -37,7 +37,6 @@
 </div>
 
 
-
 <form action="" class="messageSubmitForm">
     <input id="m" autocomplete="off"/>
     <button id="send">Send</button>
@@ -58,13 +57,17 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
-    $('form').submit(function () {
+    $('.messageSubmitForm').submit(function () {
+
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
+
         return false;
     });
-    socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>' + socket.username).text(msg));
+    socket.on('chat message', function (data) {
+        var nick = data.nick;
+        var ms = data.message;
+         $('#messages').append($('<li>').text(nick + ':' + ms));
     });
 </script>
 <script>
@@ -93,26 +96,32 @@
         var $messageBox = $('#m');
         var $chat = $('#messages');
 
+        $messageForm.hide();
+        $users.hide();
         $nickForm.submit(function (e) {
             e.preventDefault();
             socket.emit('new user', $nickBox.val(), function (data) {
                 if (data) {
                     $('.nickWrap').hide();
                     $('.messageDiv').show();
-                }else{
+                } else {
                     $nickError.html('That display name is already in use, try another');
                 }
             });
             $nickBox.val('');
         });
 
-        socket.on('usernames',function(data){
+        socket.on('usernames', function (data) {
             var html = '';
-            for(i=0;i<data.length;i++){
-                html += '<div>' + data[i] + '<div>' + '<br>'
+            for (i = 0; i < data.length; i++) {
+//                html += '<div>' + data[i] + '<div>' + '<br>'
+                html +=  data[i] + '<br>'
             }
             $users.html('<h2 class="userListHeader">People in the<br> Chatmosphere</h2>' + html);
+            $messageForm.show();
+            $users.show();
             $nickForm.hide();
+
 //            $('#nickWrap').hide();
         });
 
