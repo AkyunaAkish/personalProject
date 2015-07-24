@@ -9,7 +9,7 @@ body {
     font: 13px Helvetica, Arial;
 }
 
-form {
+.messageSubmitForm {
     background: #000;
     padding: 3px;
     position: fixed;
@@ -17,26 +17,28 @@ form {
     width: 100%;
 }
 
-form input {
+.messageSubmitForm input {
     border: 0;
     padding: 10px;
     width: 90%;
     margin-right: .5%;
 }
 
-form button {
+.messageSubmitForm button {
     width: 9%;
     background: rgb(130, 224, 255);
     border: none;
     padding: 10px;
 }
 
-.messageDiv{
-    overflow:   auto;
-    position:   relative;
-    width:      100%;
-    height:     697px;
+.messageDiv {
+    overflow: auto;
+    position: absolute;
+    width: 85%;
+    height: 697px;
     border: 10px double black;
+    word-break: break-all;
+    clear: both;
 
 }
 
@@ -55,7 +57,39 @@ form button {
     background: #eee;
 }
 
+.nickWrap {
+    /*position: fixed;*/
+    right: 0;
+    top: 15px;
+    margin-right: 1%;
+    width: 100%;
+    /*float: right;*/
+    border: 5px double black;
+    clear: both;
+}
 
+.messageDiv {
+    border: 10px double black;
+    display: none;
+    float: right;
+
+}
+
+#users {
+    border: 5px double black;
+    /*float: right;*/
+    /*clear: both;*/
+    height: 697px;
+    width: 15%;
+    float: right;
+    clear: both;
+    word-break: break-all;
+    overflow: scroll;
+
+}
+.userListHeader{
+    border-bottom: 5px double black;
+}
 
 
 

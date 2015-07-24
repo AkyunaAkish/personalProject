@@ -1,13 +1,57 @@
 <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+<!--<div id="nickWrap">-->
+<!--<p>Enter your display name</p>-->
+<!--<p id="nickError"></p>-->
+<!--<form id="setNick">-->
+<!--<input type="text" id="nickname"/>-->
+<!--<input type="submit"/>-->
+<!--</form>-->
+<!--</div>-->
+
+
+<!--<div class="messageDiv">-->
+<!--<div id="chatWrap">-->
+<!--<ul id="messages"></ul>-->
+<!--</div>-->
+<!--<div id="users"></div>-->
+<!--</div>-->
+
+
+<div class="nickWrap">
+    <p id="nickError"></p>
+
+    <form class="nickNameForm">
+        <label for="nickNameInput">Enter Display Name
+            <input type="text" id="nickname"/>
+        </label>
+        <input type="submit" value="sumbit"/>
+    </form>
+</div>
+<div id='users'><h2 class="userListHeader">People in the<br> Chatmosphere</h2></div>
 <div class="messageDiv">
+
+
     <ul id="messages"></ul>
+
 </div>
 
 
-<form action="">
+
+<form action="" class="messageSubmitForm">
     <input id="m" autocomplete="off"/>
-    <button>Send</button>
+    <button id="send">Send</button>
 </form>
+
+
+<!--<div class="messageDiv">-->
+<!--<ul id="messages"></ul>-->
+<!--</div>-->
+
+<!--<form action="" class="messageSubmitForm">-->
+<!--<input id="m" autocomplete="off"/>-->
+<!--<button id="send">Send</button>-->
+<!--</form>-->
 
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -20,20 +64,58 @@
         return false;
     });
     socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>' + socket.username).text(msg));
     });
 </script>
 <script>
     var $cont = $('.messageDiv');
     $cont[0].scrollTop = $cont[0].scrollHeight;
 
-    $('#m').keyup(function(e) {
+    $('#m').keyup(function (e) {
         if (e.keyCode == 13) {
 //            $cont.append('<p>' + $(this).val() + '</p>');
             $cont[0].scrollTop = $cont[0].scrollHeight;
 //            $(this).val('');
         }
     })
-//            .focus();
+    //            .focus();
 </script>
 
+<script>
+    jQuery(function ($) {
+        var socket = io.connect();
+        var $nickForm = $('.nickNameForm');
+        var $nickError = $('#nickError');
+        var $nickBox = $('#nickname');
+        var $users = $('#users');
+//        var $users = $('#usersP');
+        var $messageForm = $('.messageSubmitForm');
+        var $messageBox = $('#m');
+        var $chat = $('#messages');
+
+        $nickForm.submit(function (e) {
+            e.preventDefault();
+            socket.emit('new user', $nickBox.val(), function (data) {
+                if (data) {
+                    $('.nickWrap').hide();
+                    $('.messageDiv').show();
+                }else{
+                    $nickError.html('That display name is already in use, try another');
+                }
+            });
+            $nickBox.val('');
+        });
+
+        socket.on('usernames',function(data){
+            var html = '';
+            for(i=0;i<data.length;i++){
+                html += '<div>' + data[i] + '<div>' + '<br>'
+            }
+            $users.html('<h2 class="userListHeader">People in the<br> Chatmosphere</h2>' + html);
+            $nickForm.hide();
+//            $('#nickWrap').hide();
+        });
+
+
+    })
+</script>
