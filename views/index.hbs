@@ -29,7 +29,15 @@
         <input type="submit" value="Submit" id="nickSubmit"/>
     </form>
 </div>
-<div id='users'><h2 class="userListHeader">The<br> Chatmosphere</h2></div>
+
+<div id='users'>
+
+    <h2 class="userListHeader"><a href="/logout" class="logoutAnchor">
+        <button class="logoutAnchor">Logout</button>
+    </a>The<br> Chatmosphere
+    </h2>
+
+</div>
 <div class="messageDiv">
 
 
@@ -93,14 +101,15 @@
         var $nickError = $('#nickError');
         var $nickBox = $('#nickname');
         var $users = $('#users');
-//        var $users = $('#usersP');
+        var $logout = $('.logoutAnchor');
         var $messageForm = $('.messageSubmitForm');
         var $messageBox = $('#m');
         var $chat = $('#messages');
 
 
 //        $messageForm.hide();
-//        $users.hide();
+//        $users.show();
+
         $nickForm.submit(function (e) {
             e.preventDefault();
             socket.emit('new user', $nickBox.val(), function (data) {
@@ -120,11 +129,13 @@
 //                html += '<div>' + data[i] + '</div>' + '<br>'
                 html += data[i] + '<br>'
             }
-            $users.html('<h2 class="userListHeader">The<br> Chatmosphere</h2>' + html);
+            $users.html('<h2 class="userListHeader"><a href="/logout" class="logoutAnchor"><button class="logoutAnchor">Logout</button></a>The<br> Chatmosphere</h2>' + html);
             $messageForm.show();
             $users.show();
+            $logout.show();
+//            $('.logoutAnchor').show();
 //            $nickForm.hide();
-            $('#please').hide();
+//            $('#please').hide();
 //            $('#nickWrap').hide();
         });
 
