@@ -24,7 +24,6 @@ router.get('/', function(req, res, next) {
 
  router.get('/index', function(req,res){
      users.findOne({_id: req.session.id}, function (err, docs) {
-         //console.log(docs.username);
          res.render('index', { title: 'Chat', username: docs.username});
      })
 })

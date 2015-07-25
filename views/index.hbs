@@ -22,13 +22,14 @@
     <p id="nickError"></p>
 
     <form class="nickNameForm">
-        <label for="nickNameInput">Enter Display Name
+        <div id="please">Please enter a display name to join the Chatmosphere</div>
+        <label for="nickNameInput" id="nickLabel">Enter Display Name
             <input type="text" id="nickname"/>
         </label>
-        <input type="submit" value="sumbit"/>
+        <input type="submit" value="Submit" id="nickSubmit"/>
     </form>
 </div>
-<div id='users'><h2 class="userListHeader">People in the<br> Chatmosphere</h2></div>
+<div id='users'><h2 class="userListHeader">The<br> Chatmosphere</h2></div>
 <div class="messageDiv">
 
 
@@ -60,26 +61,30 @@
     var $cont = $('.messageDiv');
     $cont[0].scrollTop = $cont[0].scrollHeight;
 
-//maybe messageArea on event?
-//    $('#m').keyup(function (e) {
-//        if (e.keyCode == 13) {
-//            $cont[0].scrollTop = $cont[0].scrollHeight;
-//        }
-//    })
-
-
-//    $('#message').input(function (e) {
-//        if (e.keyCode == 13) {
-//            $cont[0].scrollTop = $cont[0].scrollHeight;
-//        }
-//    })
-
-
-    $('.messageDiv').trigger(event, function() {
+    //maybe messageArea on event?
+    $('#m').keyup(function (e) {
+        if (e.keyCode == 13) {
+            $cont[0].scrollTop = $cont[0].scrollHeight;
+        }
+    })
+    $('#send').click(function () {
         $cont[0].scrollTop = $cont[0].scrollHeight;
-    });
+    })
+
+
+    //    $('#message').input(function (e) {
+    //        if (e.keyCode == 13) {
+    //            $cont[0].scrollTop = $cont[0].scrollHeight;
+    //        }
+    //    })
+
+
+    //    $('.messageDiv').trigger(event, function() {
+    //        $cont[0].scrollTop = $cont[0].scrollHeight;
+    //    });
 
 </script>
+
 
 <script>
     jQuery(function ($) {
@@ -112,28 +117,30 @@
         socket.on('usernames', function (data) {
             var html = '';
             for (i = 0; i < data.length; i++) {
-//                html += '<div>' + data[i] + '<div>' + '<br>'
-                html +=  data[i] + '<br>'
+//                html += '<div>' + data[i] + '</div>' + '<br>'
+                html += data[i] + '<br>'
             }
-            $users.html('<h2 class="userListHeader">People in the<br> Chatmosphere</h2>' + html);
+            $users.html('<h2 class="userListHeader">The<br> Chatmosphere</h2>' + html);
             $messageForm.show();
             $users.show();
 //            $nickForm.hide();
-
+            $('#please').hide();
 //            $('#nickWrap').hide();
         });
 
-$messageForm.submit(function(e){
-    e.preventDefault();
-    socket.emit('chat message',$('#m').val())
-    $('#m').val('');
-})
+        $messageForm.submit(function (e) {
+            e.preventDefault();
+            socket.emit('chat message', $('#m').val())
+            $('#m').val('');
+        })
 
-        socket.on('chat message', function(data){
+        socket.on('chat message', function (data) {
             var nick = data.nick;
             var ms = data.message;
             $('#messages').append($('<li>').text(nick + ':' + ms));
+
         })
 
     })
 </script>
+
