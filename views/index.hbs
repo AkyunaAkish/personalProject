@@ -93,8 +93,15 @@
 
 </script>
 
+<script>
+    window.onbeforeunload = function() {
+        return 'By refreshing or navigating away from this page, you will be taken out of the chat, continue?';
+    };
+</script>
+
 
 <script>
+
     jQuery(function ($) {
         var socket = io.connect();
         var $nickForm = $('.nickNameForm');
@@ -148,8 +155,9 @@
         socket.on('chat message', function (data) {
             var nick = data.nick;
             var ms = data.message;
-            $('#messages').append($('<li>').text(nick + ':' + ms));
-
+            if(nick !== undefined){
+                $('#messages').append($('<li>').text(nick + ': ' + ms));
+            }
         })
 
     })

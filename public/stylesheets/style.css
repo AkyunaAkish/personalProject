@@ -156,7 +156,7 @@ body {
 }
 
 .logoutAnchor button{
-    background: url('http://www.thenewestmovie.com/wp-content/uploads/2009/06/19384_medium.jpg')no-repeat;
+    background:black;
     background-size: cover;
     color: white;
     border: 1px solid black;
