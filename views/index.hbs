@@ -1,157 +1,139 @@
 <link rel='stylesheet' href='/stylesheets/style.css'/>
 
-<!--<div id="nickWrap">-->
-<!--<p>Enter your display name</p>-->
-<!--<p id="nickError"></p>-->
-<!--<form id="setNick">-->
-<!--<input type="text" id="nickname"/>-->
-<!--<input type="submit"/>-->
-<!--</form>-->
-<!--</div>-->
-
-
-<!--<div class="messageDiv">-->
-<!--<div id="chatWrap">-->
-<!--<ul id="messages"></ul>-->
-<!--</div>-->
-<!--<div id="users"></div>-->
-<!--</div>-->
-
-
 <div class="nickWrap">
-    <p id="nickError"></p>
+  <p id="nickError"></p>
 
-    <form class="nickNameForm">
-        <div id="please">Please enter a display name to join the Chatmosphere</div>
-        <label for="nickNameInput" id="nickLabel">Enter Display Name
-            <input type="text" id="nickname"/>
-        </label>
-        <input type="submit" value="Submit" id="nickSubmit"/>
-    </form>
+  <form class="nickNameForm"  name="Form">
+    <div id="please">Please enter a display name to join the Chatmosphere</div>
+    <label for="nickNameInput" id="nickLabel">Enter Display Name
+      <input type="text" id="nickname" name="nickInput"/>
+    </label>
+    <input type="submit" value="Submit" id="nickSubmit"/>
+  </form>
 </div>
 
 <div id='users'>
 
-    <h2 class="userListHeader"><a href="/logout" class="logoutAnchor">
-        <button class="logoutAnchor">Logout</button>
-    </a>The<br> Chatmosphere
-    </h2>
+  <h2 class="userListHeader"><a href="/logout" class="logoutAnchor">
+    <button class="logoutAnchor">Logout</button>
+  </a>The<br> Chatmosphere
+</h2>
 
 </div>
 <div class="messageDiv">
 
 
-    <ul id="messages"></ul>
+  <ul id="messages"></ul>
 
 </div>
 
-
 <form action="" class="messageSubmitForm">
-    <input id="m" autocomplete="off"/>
-    <button id="send">Send</button>
+  <input id="m" autocomplete="off" />
+  <button id="send" >Send</button>
 </form>
-
-
-<!--<div class="messageDiv">-->
-<!--<ul id="messages"></ul>-->
-<!--</div>-->
-
-<!--<form action="" class="messageSubmitForm">-->
-<!--<input id="m" autocomplete="off"/>-->
-<!--<button id="send">Send</button>-->
-<!--</form>-->
 
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 
 <script>
-    // var $cont = $('.messageDiv');
-    // $cont[0].scrollTop = $cont[0].scrollHeight;
-    //
-    // //maybe messageArea on event?
-    // $('#m').keyup(function (e) {
-    //     if (e.keyCode == 13) {
-    //         $cont[0].scrollTop = $cont[0].scrollHeight;
-    //     }
-    // })
-    // $('#send').click(function () {
-    //     $cont[0].scrollTop = $cont[0].scrollHeight;
-    // })
+var $cont = $('.messageDiv');
+$cont[0].scrollTop = $cont[0].scrollHeight;
 
-    window.setInterval(function() {
-      var elem = document.getElementsByClassName('messageDiv')[0];
-      elem.scrollTop = elem.scrollHeight;
-    }, 100);
+//maybe messageArea on event?
+$('#m').keyup(function (e) {
+  if (e.keyCode == 13) {
+    $cont[0].scrollTop = $cont[0].scrollHeight;
+  }
+})
+$('#send').click(function () {
+  $cont[0].scrollTop = $cont[0].scrollHeight;
+})
+// $( "#send" ).on( "click",window.setInterval(function() {
+//   var elem = document.getElementsByClassName('messageDiv')[0];
+//   elem.scrollTop = elem.scrollHeight;
+// }, 100));
+
+
 
 </script>
 
 <script>
-    window.onbeforeunload = function() {
-        return 'By refreshing or navigating away from this page, you will be taken out of the chat, continue?';
-    };
+window.onbeforeunload = function() {
+  return 'By refreshing or navigating away from this page, you will be taken out of the chat, continue?';
+}
 </script>
 
 
 <script>
 
-    jQuery(function ($) {
-        var socket = io.connect();
-        var $nickForm = $('.nickNameForm');
-        var $nickError = $('#nickError');
-        var $nickBox = $('#nickname');
-        var $users = $('#users');
-        var $logout = $('.logoutAnchor');
-        var $messageForm = $('.messageSubmitForm');
-        var $messageBox = $('#m');
-        var $chat = $('#messages');
+jQuery(function ($) {
+  var socket = io.connect();
+  var $nickForm = $('.nickNameForm');
+  var $nickError = $('#nickError');
+  var $nickBox = $('#nickname');
+  var $users = $('#users');
+  var $logout = $('.logoutAnchor');
+  var $messageForm = $('.messageSubmitForm');
+  var $messageBox = $('#m');
+  var $chat = $('#messages');
 
 
-//        $messageForm.hide();
-//        $users.show();
+  //        $messageForm.hide();
+  //        $users.show();
 
-        $nickForm.submit(function (e) {
-            e.preventDefault();
-            socket.emit('new user', $nickBox.val(), function (data) {
-                if (data) {
-                    $('.nickWrap').hide();
-                    $('.messageDiv').show();
-                } else {
-                    $nickError.html('That display name is already in use, try another');
-                }
-            });
-            $nickBox.val('');
-        });
+  $('.nickNameForm').submit(function(e) {
+      if ($.trim($("#nickname").val()) === "") {
+          alert('Please enter a display name');
+          return false;
+      }
+else{
+  // $nickForm.submit(function (e) {
+    e.preventDefault();
+    socket.emit('new user',$nickBox.val() , function (data) {
 
-        socket.on('usernames', function (data) {
-            var html = '';
-            for (i = 0; i < data.length; i++) {
-//                html += '<div>' + data[i] + '</div>' + '<br>'
-                html += data[i] + '<br>'
-            }
-            $users.html('<h2 class="userListHeader"><a href="/logout" class="logoutAnchor"><button class="logoutAnchor">Logout</button></a>The<br> Chatmosphere</h2>' + html);
-            $messageForm.show();
-            $users.show();
-            $logout.show();
-//            $('.logoutAnchor').show();
-//            $nickForm.hide();
-//            $('#please').hide();
-//            $('#nickWrap').hide();
-        });
+       if (data) {
+        $('.nickWrap').hide();
+        $('.messageDiv').show();
+      } else {
+        $nickError.html('That display name is already in use, try another');
+      }
+    });
+    $nickBox.val('');
+  // });
+}
+  });
 
-        $messageForm.submit(function (e) {
-            e.preventDefault();
-            socket.emit('chat message', $('#m').val())
-            $('#m').val('');
-        })
 
-        socket.on('chat message', function (data) {
-            var nick = data.nick;
-            var ms = data.message;
-            if(nick !== undefined){
-                $('#messages').append($('<li>').text(nick + ': ' + ms));
-            }
-        })
+  socket.on('usernames', function (data) {
+    var html = '';
+    for (i = 0; i < data.length; i++) {
+      //                html += '<div>' + data[i] + '</div>' + '<br>'
+      html += data[i] + '<br>'
+    }
+    $users.html('<h2 class="userListHeader"><a href="/logout" class="logoutAnchor"><button class="logoutAnchor">Logout</button></a>The<br> Chatmosphere</h2>' + html);
+    $messageForm.show();
+    $users.show();
+    $logout.show();
+    //            $('.logoutAnchor').show();
+    //            $nickForm.hide();
+    //            $('#please').hide();
+    //            $('#nickWrap').hide();
+  });
 
-    })
+  $messageForm.submit(function (e) {
+    e.preventDefault();
+    socket.emit('chat message', $('#m').val())
+    $('#m').val('');
+  })
+
+  socket.on('chat message', function (data) {
+    var nick = data.nick;
+    var ms = data.message;
+    if(nick !== undefined){
+      $('#messages').append($('<li>').text(nick + ': ' + ms));
+    }
+  })
+
+})
 </script>
