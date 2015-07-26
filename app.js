@@ -24,8 +24,8 @@ app.set('view engine', 'hbs');
 app.set('trust proxy', 1);
 
 app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2']
+  name: 'session',
+  keys: ['key1', 'key2']
 }));
 
 

@@ -66,30 +66,23 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 
 <script>
-    var $cont = $('.messageDiv');
-    $cont[0].scrollTop = $cont[0].scrollHeight;
+    // var $cont = $('.messageDiv');
+    // $cont[0].scrollTop = $cont[0].scrollHeight;
+    //
+    // //maybe messageArea on event?
+    // $('#m').keyup(function (e) {
+    //     if (e.keyCode == 13) {
+    //         $cont[0].scrollTop = $cont[0].scrollHeight;
+    //     }
+    // })
+    // $('#send').click(function () {
+    //     $cont[0].scrollTop = $cont[0].scrollHeight;
+    // })
 
-    //maybe messageArea on event?
-    $('#m').keyup(function (e) {
-        if (e.keyCode == 13) {
-            $cont[0].scrollTop = $cont[0].scrollHeight;
-        }
-    })
-    $('#send').click(function () {
-        $cont[0].scrollTop = $cont[0].scrollHeight;
-    })
-
-
-    //    $('#message').input(function (e) {
-    //        if (e.keyCode == 13) {
-    //            $cont[0].scrollTop = $cont[0].scrollHeight;
-    //        }
-    //    })
-
-
-    //    $('.messageDiv').trigger(event, function() {
-    //        $cont[0].scrollTop = $cont[0].scrollHeight;
-    //    });
+    window.setInterval(function() {
+      var elem = document.getElementsByClassName('messageDiv')[0];
+      elem.scrollTop = elem.scrollHeight;
+    }, 100);
 
 </script>
 
@@ -162,4 +155,3 @@
 
     })
 </script>
-

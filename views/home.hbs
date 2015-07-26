@@ -1,64 +1,64 @@
 <link rel='stylesheet' href='/stylesheets/style2.css' />
 
 <nav class="homepageNav">
-    <div class="homepageNavDiv">
-        <div class="homepageNameDiv">
-            <p>The Chatmosphere</p>
-        </div>
-
-        <div class="loginErrorDiv">
-            {{#if loginError}}
-                {{loginError}}
-            {{/if}}
-        </div>
-
-        <form action="/login" method="post">
-            <label for="username">Username
-                <input type="username" name="username" id="username"/>
-            </label>
-            <label for="password">Password
-                <input type="password" name="password" id="password"/>
-            </label>
-            <input type="submit" value="Login" class="homepageSubmit"/>
-        </form>
+  <div class="homepageNavDiv">
+    <div class="homepageNameDiv">
+      <p>The Chatmosphere</p>
     </div>
+
+    <div class="loginErrorDiv">
+      {{#if loginError}}
+      {{loginError}}
+      {{/if}}
+    </div>
+
+    <form action="/login" method="post">
+      <label for="username">Username
+        <input type="username" name="username" id="username"/>
+      </label>
+      <label for="password">Password
+        <input type="password" name="password" id="password"/>
+      </label>
+      <input type="submit" value="Login" class="homepageSubmit"/>
+    </form>
+  </div>
 </nav>
 
 
 
 <div class="registerErrorDiv">
-    {{#if registerError}}
-        <p class="errorP">
-            {{registerError}}
-        </p>
-    {{/if}}
+  {{#if registerError}}
+  <p class="errorP">
+    {{registerError}}
+  </p>
+  {{/if}}
 </div>
 <div class="registerMessageDiv">
-    {{#if successfulRegister}}
-        <p class="successP">
-            {{successfulRegister}}
-        </p>
+  {{#if successfulRegister}}
+  <p class="successP">
+    {{successfulRegister}}
+  </p>
 
-    {{/if}}
+  {{/if}}
 </div>
 
 
 <div class="registerDiv">
-    <h2 class="registerHere">Sign Up</h2>
+  <h2 class="registerHere">Sign Up</h2>
 
-    <form action="/register" method="post">
-        <div class="registerUsername">
-            <label for="username">Username
-                <input type="text" name="username" id="username"/>
-            </label><br>
-        </div>
+  <form action="/register" method="post">
+    <div class="registerUsername">
+      <label for="username">Username
+        <input type="text" name="username" id="username"/>
+      </label><br>
+    </div>
 
-        <div class="registerPassword">
-            <label for="password">Password
-                <input type="password" name="password" id="password"/>
-            </label><br>
-        </div>
-        <input type="submit" value="Register" class="homepageRegisterSubmit"/>
+    <div class="registerPassword">
+      <label for="password">Password
+        <input type="password" name="password" id="password"/>
+      </label><br>
+    </div>
+    <input type="submit" value="Register" class="homepageRegisterSubmit"/>
 
-    </form>
+  </form>
 </div>
