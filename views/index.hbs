@@ -37,23 +37,32 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 
 <script>
-var $cont = $('.messageDiv');
-$cont[0].scrollTop = $cont[0].scrollHeight;
+//scroll for only the person writing a message
+// var $cont = $('.messageDiv');
+// $cont[0].scrollTop = $cont[0].scrollHeight;
+//
+// //maybe messageArea on event?
+// $('#m').keyup(function (e) {
+//   if (e.keyCode == 13) {
+//     $cont[0].scrollTop = $cont[0].scrollHeight;
+//   }
+// })
+// $('#send').click(function () {
+//   $cont[0].scrollTop = $cont[0].scrollHeight;
+// })
 
-//maybe messageArea on event?
-$('#m').keyup(function (e) {
-  if (e.keyCode == 13) {
-    $cont[0].scrollTop = $cont[0].scrollHeight;
-  }
-})
-$('#send').click(function () {
-  $cont[0].scrollTop = $cont[0].scrollHeight;
-})
+//timed scroll
 // $( "#send" ).on( "click",window.setInterval(function() {
 //   var elem = document.getElementsByClassName('messageDiv')[0];
 //   elem.scrollTop = elem.scrollHeight;
 // }, 100));
 
+
+$(".messageDiv").bind("DOMSubtreeModified",function() {
+  $(".messageDiv").animate({
+      scrollTop: $(".messageDiv")[0].scrollHeight
+    });
+});
 
 
 </script>
