@@ -174,3 +174,23 @@ body {
 .chatMessage{
   color: black;
 }
+
+
+
+.directMessageInstructions{
+    background: black;
+    background-size: cover;
+    color: lawngreen;
+    height: 30px;
+    text-align: center;
+    padding-top: 0.5%;
+}
+
+#hideInstructions{
+  float: right;
+  background: url('http://www.thenewestmovie.com/wp-content/uploads/2009/06/19384_medium.jpg')no-repeat;
+  background-size: cover;
+  color: lawngreen;
+  font-family: fantasy;
+  border: none;
+}

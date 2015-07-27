@@ -12,6 +12,14 @@
   </form>
 </div>
 
+<div class="directMessageInstructions">
+  <p class='howToWhisperP'>
+    To send a direct message: (in the message input field) /w valid-displayname Your-message
+      <button type="button" name="button" id='hideInstructions'>Hide</button>
+  </p>
+
+</div>
+
 <div id='users'>
 
   <h2 class="userListHeader"><a href="/logout" class="logoutAnchor">
@@ -74,6 +82,12 @@ window.onbeforeunload = function() {
 </script>
 
 
+<script type="text/javascript">
+$( "#hideInstructions" ).click(function() {
+$( ".directMessageInstructions" ).hide();
+});
+</script>
+
 <script>
 
 jQuery(function ($) {
@@ -90,7 +104,7 @@ jQuery(function ($) {
 
   //        $messageForm.hide();
   //        $users.show();
-
+  $('.directMessageInstructions').hide();
   $('.nickNameForm').submit(function(e) {
     if ($.trim($("#nickname").val()) === "") {
       alert('Please enter a display name');
@@ -103,6 +117,7 @@ jQuery(function ($) {
 
         if (data) {
           $('.nickWrap').hide();
+          $('.directMessageInstructions').show();
           $('.messageDiv').show();
         } else {
           $nickError.html('That display name is already in use, try another');
