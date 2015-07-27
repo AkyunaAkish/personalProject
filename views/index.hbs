@@ -57,11 +57,11 @@
 //   elem.scrollTop = elem.scrollHeight;
 // }, 100));
 
-
+//best scroll method so far
 $(".messageDiv").bind("DOMSubtreeModified",function() {
   $(".messageDiv").animate({
-      scrollTop: $(".messageDiv")[0].scrollHeight
-    });
+    scrollTop: $(".messageDiv")[0].scrollHeight
+  });
 });
 
 
@@ -92,25 +92,25 @@ jQuery(function ($) {
   //        $users.show();
 
   $('.nickNameForm').submit(function(e) {
-      if ($.trim($("#nickname").val()) === "") {
-          alert('Please enter a display name');
-          return false;
-      }
-else{
-  // $nickForm.submit(function (e) {
-    e.preventDefault();
-    socket.emit('new user',$nickBox.val() , function (data) {
+    if ($.trim($("#nickname").val()) === "") {
+      alert('Please enter a display name');
+      return false;
+    }
+    else{
+      // $nickForm.submit(function (e) {
+      e.preventDefault();
+      socket.emit('new user',$nickBox.val() , function (data) {
 
-       if (data) {
-        $('.nickWrap').hide();
-        $('.messageDiv').show();
-      } else {
-        $nickError.html('That display name is already in use, try another');
-      }
-    });
-    $nickBox.val('');
-  // });
-}
+        if (data) {
+          $('.nickWrap').hide();
+          $('.messageDiv').show();
+        } else {
+          $nickError.html('That display name is already in use, try another');
+        }
+      });
+      $nickBox.val('');
+      // });
+    }
   });
 
 
@@ -130,11 +130,17 @@ else{
     //            $('#nickWrap').hide();
   });
 
-  $messageForm.submit(function (e) {
-    e.preventDefault();
-    socket.emit('chat message', $('#m').val())
-    $('#m').val('');
+  $('.messageSubmitForm').submit(function(e) {
+    if ($.trim($("#m").val()) === "") {
+      return false;
+    }else{
+      // $messageForm.submit(function (e) {
+      e.preventDefault();
+      socket.emit('chat message', $('#m').val())
+      $('#m').val('');
+    }
   })
+
 
   socket.on('chat message', function (data) {
     var nick = data.nick;
