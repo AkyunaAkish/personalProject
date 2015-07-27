@@ -24,8 +24,9 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
+//new  version with Private messaging
 //new stuff
-var nickNames = [];
+var users = {};
 
 io.on('connection', function (socket) {
   socket.on('connect', function () {
@@ -36,30 +37,94 @@ io.on('connection', function (socket) {
 
   //begin new stuff
   socket.on('new user', function (data, callback) {
-    if (nickNames.indexOf(data) !== -1) {
+    if (data in users) {
       callback(false);
     } else {
       callback(true);
       socket.nickname = data;
-      nickNames.push(socket.nickname);
-      io.sockets.emit('usernames', nickNames);
+      users[socket.nickname] = socket;
+      io.sockets.emit('usernames', Object.keys(users));
     }
   });
   //end new stuff
-  socket.on('chat message', function (msg) {
-    io.emit('chat message', {message: msg, nick: socket.nickname});
+  socket.on('chat message', function (msg, callback) {
+    var data = msg.trim();
+    if(data.substr(0,3) === '/w '){
+      data = data.substr(3);
+      var ind = data.indexOf(' ');
+      if(ind !== -1){
+        var name = data.substring(0, ind);
+        var msg = data.substring(ind + 1);
+        if(name in users){
+          users[name].emit('whisper', {message: msg, nick: socket.nickname});
+          console.log('Whisper!!!');
+        }else{
+          callback('Error , enter a valid user for your whisper.');
+        }
+
+      }else{
+        callback('Error , please enter a message for your whisper.');
+      }
+
+    }else{
+
+
+      io.emit('chat message', {message: msg, nick: socket.nickname});
+    }
   });
+
 
 
   socket.on('disconnect', function (data) {
     if (!socket.nickname) {
       return;
     }
-    nickNames.splice(nickNames.indexOf(socket.nickname), 1);
-    io.sockets.emit('usernames', nickNames);
+    delete users[socket.nickname];
+    io.sockets.emit('usernames', Object.keys(users));
 
   })
 });
+//end new Version with private messages
+
+
+//Original version
+// //new stuff
+// var nickNames = [];
+//
+// io.on('connection', function (socket) {
+//   socket.on('connect', function () {
+//     console.log("socket connected");
+//   });
+//
+//
+//
+//   //begin new stuff
+//   socket.on('new user', function (data, callback) {
+//     if (nickNames.indexOf(data) !== -1) {
+//       callback(false);
+//     } else {
+//       callback(true);
+//       socket.nickname = data;
+//       nickNames.push(socket.nickname);
+//       io.sockets.emit('usernames', nickNames);
+//     }
+//   });
+//   //end new stuff
+//   socket.on('chat message', function (msg) {
+//     io.emit('chat message', {message: msg, nick: socket.nickname});
+//   });
+//
+//
+//   socket.on('disconnect', function (data) {
+//     if (!socket.nickname) {
+//       return;
+//     }
+//     nickNames.splice(nickNames.indexOf(socket.nickname), 1);
+//     io.sockets.emit('usernames', nickNames);
+//
+//   })
+// });
+//end original version
 
 
 /**

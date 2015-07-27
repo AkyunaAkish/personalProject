@@ -136,7 +136,9 @@ jQuery(function ($) {
     }else{
       // $messageForm.submit(function (e) {
       e.preventDefault();
-      socket.emit('chat message', $('#m').val())
+      socket.emit('chat message', $('#m').val(), function(data){
+        $('#messages').append($('<li class="errorMessage">').text(data));
+      })
       $('#m').val('');
     }
   })
@@ -146,7 +148,15 @@ jQuery(function ($) {
     var nick = data.nick;
     var ms = data.message;
     if(nick !== undefined){
-      $('#messages').append($('<li>').text(nick + ': ' + ms));
+      $('#messages').append($('<li class="chatMessage">').text(nick + ': ' + ms));
+    }
+  })
+
+  socket.on('whisper', function(data){
+    var nick = data.nick;
+    var ms = data.message;
+    if(nick !== undefined){
+      $('#messages').append($('<li class="whisper">').text(nick + ': ' + ms));
     }
   })
 

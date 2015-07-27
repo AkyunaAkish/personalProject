@@ -162,3 +162,15 @@ body {
     border: 1px solid black;
     width: 100%;
 }
+
+.errorMessage{
+  color: red;
+}
+
+.whisper{
+  color: purple;
+}
+
+.chatMessage{
+  color: black;
+}
