@@ -14,7 +14,7 @@
 
 <div class="directMessageInstructions">
   <p class='howToWhisperP'>
-    To send a direct message: (in the message input field) /w valid-displayname Your-message
+    To send a direct via the input field: /w+(space)+valid-displayname+(space)+Your-message (If you don't see output after sending, you sent it correctly)
       <button type="button" name="button" id='hideInstructions'>Hide</button>
   </p>
 
@@ -120,7 +120,7 @@ jQuery(function ($) {
           $('.directMessageInstructions').show();
           $('.messageDiv').show();
         } else {
-          $nickError.html('That display name is already in use, try another');
+          $nickError.html('<p class=pleaseUseDifferentName>That display name is already in use, try another</p>');
         }
       });
       $nickBox.val('');

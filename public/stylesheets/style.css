@@ -194,3 +194,8 @@ body {
   font-family: fantasy;
   border: none;
 }
+
+.pleaseUseDifferentName{
+  color:red;
+  font-family: fantasy;
+}
