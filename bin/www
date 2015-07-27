@@ -59,11 +59,11 @@ io.on('connection', function (socket) {
           users[name].emit('whisper', {message: msg, nick: socket.nickname});
           console.log('Whisper!!!');
         }else{
-          callback('Error , enter a valid user for your whisper.');
+          callback('Error , enter a valid user for your direct message.');
         }
 
       }else{
-        callback('Error , please enter a message for your whisper.');
+        callback('Error , please enter a message for your direct message.');
       }
 
     }else{
