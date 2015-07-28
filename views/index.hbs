@@ -113,7 +113,7 @@ jQuery(function ($) {
     else{
       // $nickForm.submit(function (e) {
       e.preventDefault();
-      socket.emit('new user',$nickBox.val() , function (data) {
+      socket.emit('new user',$nickBox.val().toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s/g, "") , function (data) {
 
         if (data) {
           $('.nickWrap').hide();
