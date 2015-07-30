@@ -23,29 +23,15 @@ router.get('/', function(req, res, next) {
 });
 
  router.get('/index', function(req,res){
-     users.findOne({_id: req.session.id}, function (err, docs) {
-         res.render('index', { title: 'Chat', username: docs.username});
-     })
+     //users.findOne({_id: req.session.id}, function (err, docs) {
+     //    res.render('index', { title: 'Chat', username: docs.username});
+     //})
+     res.render('index');
 })
 
 
-//router.get('/login', function (req, res) {
-//    if (req.session.id) {
-//        res.render('index', {title: 'Chat'});
-//        //res.redirect('index');
-//
-//    } else {
-//        res.render('/');
-//    }
-//})
-
 router.post('/login', function(req, res, next) {
-    //if (!req.body.email) {
-    //    res.render('home', {emailError: 'Email must be added'})
-    //}
-    //if (!req.body.password) {
-    //    res.render('home', {passwordError: 'Password must be added'})
-    //}else {
+
         users.findOne({username: req.body.username}, function (err, docs) {
             if (docs && bcrypt.compareSync(req.body.password, docs.password)) {
                 req.session.id = docs._id;
@@ -58,7 +44,7 @@ router.post('/login', function(req, res, next) {
             }
 
         })
-    //}
+
 });
 
 
@@ -67,8 +53,6 @@ router.post('/login', function(req, res, next) {
 router.post('/register', function (req, res) {
     users.find({username: req.body.username}, function (err, docs) {
         if (docs.length === 0) {
-            //req.session.id = docs._id;
-            //console.log(req.session.id);
             bcrypt.genSalt(10, function (err, salt) {
                 bcrypt.hash(req.body.password, salt, function (err, hash) {
                     req.body.password = hash;
