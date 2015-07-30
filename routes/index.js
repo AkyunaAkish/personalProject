@@ -67,8 +67,8 @@ router.post('/login', function(req, res, next) {
 router.post('/register', function (req, res) {
     users.find({username: req.body.username}, function (err, docs) {
         if (docs.length === 0) {
-            req.session.id = docs._id;
-            console.log(req.session.id);
+            //req.session.id = docs._id;
+            //console.log(req.session.id);
             bcrypt.genSalt(10, function (err, salt) {
                 bcrypt.hash(req.body.password, salt, function (err, hash) {
                     req.body.password = hash;
