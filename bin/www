@@ -22,6 +22,60 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+
+
+//Original version
+// //new stuff
+// var nickNames = [];
+//
+// io.on('connection', function (socket) {
+//   socket.on('connect', function () {
+//     console.log("socket connected");
+//   });
+//
+//
+//
+//   //begin new stuff
+//   socket.on('new user', function (data, callback) {
+//     if (nickNames.indexOf(data) !== -1) {
+//       callback(false);
+//     } else {
+//       callback(true);
+//       socket.nickname = data;
+//       nickNames.push(socket.nickname);
+//       io.sockets.emit('usernames', nickNames);
+//     }
+//   });
+//   //end new stuff
+//   socket.on('chat message', function (msg) {
+//     io.emit('chat message', {message: msg, nick: socket.nickname});
+//   });
+//
+//
+//   socket.on('disconnect', function (data) {
+//     if (!socket.nickname) {
+//       return;
+//     }
+//     nickNames.splice(nickNames.indexOf(socket.nickname), 1);
+//     io.sockets.emit('usernames', nickNames);
+//
+//   })
+// });
+//end original version
+
+
+/**
+* Listen on provided port, on all network interfaces.
+*/
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+
+
 var io = require('socket.io')(server);
 
 //new  version with Private messaging
@@ -85,56 +139,6 @@ io.on('connection', function (socket) {
   })
 });
 //end new Version with private messages
-
-
-//Original version
-// //new stuff
-// var nickNames = [];
-//
-// io.on('connection', function (socket) {
-//   socket.on('connect', function () {
-//     console.log("socket connected");
-//   });
-//
-//
-//
-//   //begin new stuff
-//   socket.on('new user', function (data, callback) {
-//     if (nickNames.indexOf(data) !== -1) {
-//       callback(false);
-//     } else {
-//       callback(true);
-//       socket.nickname = data;
-//       nickNames.push(socket.nickname);
-//       io.sockets.emit('usernames', nickNames);
-//     }
-//   });
-//   //end new stuff
-//   socket.on('chat message', function (msg) {
-//     io.emit('chat message', {message: msg, nick: socket.nickname});
-//   });
-//
-//
-//   socket.on('disconnect', function (data) {
-//     if (!socket.nickname) {
-//       return;
-//     }
-//     nickNames.splice(nickNames.indexOf(socket.nickname), 1);
-//     io.sockets.emit('usernames', nickNames);
-//
-//   })
-// });
-//end original version
-
-
-/**
-* Listen on provided port, on all network interfaces.
-*/
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
 
 /**
 * Normalize a port into a number, string, or false.
